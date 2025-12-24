@@ -1,0 +1,61 @@
+name: Deploy A2UI CN Docs
+
+on:
+  push:
+    paths:
+      - "docs-cn/**"
+      - "mkdocs-cn.yaml"
+      - ".github/workflows/docs-cn.yml"
+      - "requirements-docs.txt"
+    branches: ["main"]
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "pages-cn"
+  cancel-in-progress: false
+
+env:
+  BUCKET: a2ui-docs
+  ENDPOINT: oss-cn-beijing.aliyuncs.com
+  ACCESS_KEY: LTAI5tK9aYP7iQkW489JHEgS
+  ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
+
+jobs:
+  build:
+    name: Build Docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: 3.13
+
+      - name: Restore pip cache
+        uses: actions/cache@v4
+        with:
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements-docs.txt') }}
+          path: ~/.cache/pip
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements-docs.txt
+
+      - name: Build with MkDocs
+        run: mkdocs build -f mkdocs-cn.yaml
+
+      - name: Install Alibaba Cloud ossutil
+        run: wget http://gosspublic.alicdn.com/ossutil/1.6.10/ossutil64 && chmod +x ossutil64
+
+      - name: Configure Alibaba Cloud ossutil
+        run: ./ossutil64 config -i ${ACCESS_KEY} -k ${ACCESS_KEY_SECRET} -e ${ENDPOINT} -c .ossutilconfig
+
+      - name: Upload the web folder to the chosen OSS bucket
+        run: ./ossutil64 --config-file .ossutilconfig cp ${{ github.workspace }}/site oss://${BUCKET} -r -f
