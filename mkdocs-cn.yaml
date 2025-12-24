@@ -1,0 +1,185 @@
+# Copyright 2025 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+site_name: A2UI
+site_url: https://a2ui.org/
+site_description: A2UI，用于代理驱动用户界面的流式传输协议
+site_author: Google
+site_dir: site
+docs_dir: docs-cn
+
+extra:
+  consent:
+    title: Cookie 同意
+    description: >-
+      我们使用 cookie 来识别重复访问和偏好，
+      以及衡量我们文档的有效性以及
+      用户是否找到了他们需要的信息。征得您的同意，
+      您将帮助我们改进文档。
+
+extra_javascript:
+  - ./js/baidutongji.js
+
+# Navigation
+nav:
+  - 首页: index.md
+  - 介绍与常见问题:
+      - 什么是 A2UI?: introduction/what-is-a2ui.md
+      - A2UI 适合谁?: introduction/who-is-it-for.md
+      - 我该如何使用?: introduction/how-to-use.md
+      - A2UI 用在哪里?: introduction/where-is-it-used.md
+      - 代理 UI 生态系统: introduction/agent-ui-ecosystem.md
+  - 快速入门: quickstart.md
+  - A2UI 编辑器 ⭐: composer.md
+  - 开发者指南:
+      - 客户端设置: guides/client-setup.md
+      - 代理开发: guides/agent-development.md
+      - 自定义组件: guides/custom-components.md
+      - 主题与样式: guides/theming.md
+  - 核心概念:
+      - 概览: concepts/overview.md
+      - 数据流: concepts/data-flow.md
+      - 组件与结构: concepts/components.md
+      - 数据绑定: concepts/data-binding.md
+  - 规范:
+      - v0.8 (稳定版):
+          - A2UI 规范: specification/v0.8-a2ui.md
+          - A2A 扩展: specification/v0.8-a2a-extension.md
+      - v0.9 (草案):
+          - A2UI 规范: specification/v0.9-a2ui.md
+          - 演进指南: specification/v0.9-evolution-guide.md
+  - 渲染器 (客户端): renderers.md
+  - 传输层 (消息传递): transports.md
+  - 代理 (服务器端): agents.md
+  - 社区: community.md
+  - 路线图: roadmap.md
+  - 参考:
+      - 组件参考: reference/components.md
+      - 消息参考: reference/messages.md
+
+# Repository
+repo_name: google/A2UI
+repo_url: https://github.com/google/A2UI
+edit_uri: raw/main/docs/
+
+# Copyright
+copyright: Copyright Google 2025&nbsp;&nbsp;|&nbsp;&nbsp;<a href="//policies.google.com/terms">条款</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="//policies.google.com/privacy">隐私</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#__consent">管理 cookies</a>
+
+# Custom CSS
+extra_css:
+  - stylesheets/custom.css
+
+# Configuration
+theme:
+  name: material
+  font:
+    text: Google Sans
+    code: Roboto Mono
+  logo: assets/A2UI_light.svg
+  favicon: assets/A2UI_dark.svg
+  icon:
+    repo: fontawesome/brands/github
+    # view: material/pencil-box-multiple
+    admonition:
+      note: fontawesome/solid/note-sticky
+      abstract: fontawesome/solid/book
+      info: fontawesome/solid/circle-info
+      tip: fontawesome/solid/bullhorn
+      success: fontawesome/solid/check
+      question: fontawesome/solid/circle-question
+      warning: fontawesome/solid/triangle-exclamation
+      failure: fontawesome/solid/bomb
+      danger: fontawesome/solid/skull
+      bug: fontawesome/solid/robot
+      example: fontawesome/solid/flask
+      quote: fontawesome/solid/quote-left
+  palette:
+    - scheme: default
+      primary: teal
+      accent: light blue
+      toggle:
+        icon: material/brightness-7
+        name: 切换到深色模式
+
+    - scheme: slate
+      primary: teal
+      accent: light blue
+      toggle:
+        icon: material/brightness-4
+        name: 切换到亮色模式
+
+  features:
+    - announce.dismiss
+    - content.action.view
+    - content.code.annotate
+    - content.code.copy
+    - content.code.select
+    - content.tabs.link
+    - navigation.footer
+    - navigation.indexes
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.path
+    - navigation.top
+    - navigation.tracking
+    - toc.follow
+
+# Extensions
+markdown_extensions:
+  - meta
+  - footnotes
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      url_download: true
+      dedent_subsections: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid
+  - pymdownx.tabbed:
+      alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - toc:
+      permalink: true
+
+# Plugins
+plugins:
+  - search
+  - macros
+  # - include-markdown
+  # - mermaid2
+  # - llmstxt:
+  #     full_output: llms-full.txt
+  #     sections:
+  #       "Specification":
+  #         - a2ui_protocol.md
+  # - redirects:
+  #     redirect_maps:
+  #       "index.md": "a2ui_protocol.md"
